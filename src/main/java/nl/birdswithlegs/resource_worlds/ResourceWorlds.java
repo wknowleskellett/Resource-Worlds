@@ -28,51 +28,11 @@ public class ResourceWorlds implements ModInitializer {
 	// It is considered best practice to use your mod id as the logger's name.
 	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-	public static final Map<Identifier, RuntimeWorldHandle> WORLDS = new HashMap<Identifier, RuntimeWorldHandle>();
 
 	@Override
 	public void onInitialize() {
 		// This code runs as soon as Minecraft is in a mod-load-ready state.
 		// However, some things (like resources) may still be uninitialized.
 		// Proceed with mild caution.
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
-				literal("new").executes(context -> {
-					// Run Command Code Here
-					MinecraftServer server = context.getSource().getServer();
-					Fantasy fantasy = Fantasy.get(server);
-
-					Identifier worldId = new Identifier(MOD_ID, "bar");//context.getSource().getName());
-					RuntimeWorldHandle worldHandle = WORLDS.get(worldId);
-					if (worldHandle == null) {
-						RuntimeWorldConfig worldConfig = new RuntimeWorldConfig()
-								.setDimensionType(DimensionTypes.OVERWORLD)
-								.setDifficulty(Difficulty.HARD)
-								.setGameRule(GameRules.DO_DAYLIGHT_CYCLE, false)
-								.setGenerator(server.getOverworld().getChunkManager().getChunkGenerator())
-								.setSeed(1234L);
-//						worldHandle = fantasy.openTemporaryWorld(worldConfig);
-						worldHandle = fantasy.getOrOpenPersistentWorld(worldId, worldConfig);
-
-						WORLDS.put(worldId, worldHandle);
-						context.getSource().sendFeedback(() -> Text.literal("Created world: "+worldId), false);
-					} else context.getSource().sendFeedback(() -> Text.literal("World already exists: "+worldId), false);
-
-					return 1;
-				})));
-		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
-				literal("del").executes(context -> {
-					// Run Command Code Here
-					MinecraftServer server = context.getSource().getServer();
-
-					Identifier worldId = new Identifier(MOD_ID, "bar");//context.getSource().getName());
-					RuntimeWorldHandle worldHandle = WORLDS.get(worldId);
-					if (worldHandle != null) {
-						worldHandle.delete();
-						WORLDS.remove(worldId);
-						context.getSource().sendFeedback(() -> Text.literal("Deleted world: "+worldId), false);
-					} else context.getSource().sendFeedback(() -> Text.literal("World does not exist: "+worldId), false);
-
-					return 1;
-				})));
 	}
 }
