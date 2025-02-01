@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "resource-worlds",
+	"version": "${version}",
+	"name": "Resource Worlds",
+	"description": "This is an example description! Tell everyone what your mod is about!",
+	"authors": [
+		"Me!"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/resource-worlds/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"nl.birdswithlegs.resource_worlds.ResourceWorlds"
+		],
+		"client": [
+			"nl.birdswithlegs.resource_worlds.ResourceWorldsClient"
+		],
+		"fabric-datagen": [
+			"nl.birdswithlegs.resource_worlds.ResourceWorldsDataGenerator"
+		]
+	},
+	"mixins": [
+		"resource-worlds.mixins.json",
+		{
+			"config": "resource-worlds.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.16.10",
+		"minecraft": "~1.20.6",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
