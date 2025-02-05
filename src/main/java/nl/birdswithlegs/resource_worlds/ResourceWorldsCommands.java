@@ -45,7 +45,7 @@ public class ResourceWorldsCommands {
 
 
         CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) -> dispatcher.register(
-                literal("list").executes(context -> {
+                literal("rwlist").executes(context -> {
                     // Run Command Code Here
                     int worldsCount = ResourceWorldsManager.WORLDS.size();
                     context.getSource().sendMessage(Text.literal("There are "+worldsCount+" resource worlds."));
